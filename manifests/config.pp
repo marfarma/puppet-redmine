@@ -1,4 +1,4 @@
-class redmine_conf {
+class redmine::config {
 
 	$production_db="redmine_production"
 	$development_db="redmine_development"
@@ -17,6 +17,6 @@ class redmine_conf {
 			Debian => Package['redmine'],
 			Centos => Exec['redmine_centos'],
 		},
-		content => template("database.yml.erb"),
+		content => template("redmine/database.yml.erb"),
 	}
 }
