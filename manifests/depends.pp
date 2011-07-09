@@ -38,7 +38,7 @@ class redmine::depends {
 			before => Package['gem_rails'];
 
 		'gem_rails':
-			ensure => 2.3.11,
+			ensure => '2.3.11',
 			name => 'rails',
 			provider => gem,
 			before => Exec['config_redmine_mysql_bootstrap'];
