@@ -1,7 +1,7 @@
-class redmine::install {
+class redmine::core {
 	case $operatingsystem {
-		Centos: { include redmine::install::centos }
-		Debian: { include redmine::install::debian }
+		Centos: { include redmine::core::centos }
+		Debian: { include redmine::core::debian }
 	}
 
 	$redmine_id = $operatingsystem ? {
@@ -22,7 +22,7 @@ class redmine::install {
 	}
 }
 
-class redmine::install::debian {
+class redmine::core::debian {
 	file { '/etc/apache2/sites-available/redmine':
 		ensure => present,
 		owner => root,
@@ -39,7 +39,7 @@ class redmine::install::debian {
 	}
 }
 
-class redmine::install::centos {
+class redmine::core::centos {
 	file { '/home/$USER/.netrc':
 		content => 'machine ftp.ruby-lang.org login anonymous password anonymous\nmacdef init\nprompt\ncd /pub/ruby\nget ruby-1.8.7-p334.tar.gz\nbye',
 	}
