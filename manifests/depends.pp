@@ -1,7 +1,7 @@
-class redmine::install {
+class redmine::depends {
 	case $operatingsystem {
-		Centos: { include redmine::install::centos }
-		Debian: { include redmine::install::debian }
+		Centos: { include redmine::depends::centos }
+		Debian: { include redmine::depends::debian }
 	}
 
 	package { redmine:
@@ -19,14 +19,14 @@ class redmine::install {
 	}
 }
 
-class redmine::install::debian {
+class redmine::depends::debian {
 	package { 'redmine-mysql':
 		ensure => installed,
 		require => Package['redmine'],
 	}
 }
 
-class redmine::install::centos {
+class redmine::depends::centos {
 	exec { 'redmine_centos':
 		path => '/bin:/usr/bin',
 		command => '/bin/sh -c "cd /usr/share/;wget http://rubyforge.org/frs/download.php/74419/redmine-1.1.2.tar.gz;tar zxvf redmine-1.1.2.tar.gz;mv redmine-1.1.2 redmine;chmod -R a+rx /usr/share/redmine/public/;cd /usr/share/redmine;chmod -R 755 files log tmp"',
