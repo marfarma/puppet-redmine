@@ -10,7 +10,7 @@ class redmine::config {
 		owner => $redmine_id,
 		group => $redmine_id,
 		path => $operatingsystem ? {
-			Debian => '/etc/default/database.yml',
+			Debian => '/etc/redmine/default/database.yml',
 			Centos => '/usr/share/redmine/config/database.yml',
 		},
 		require => $operatingsystem ? {
