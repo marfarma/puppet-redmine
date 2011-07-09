@@ -15,14 +15,60 @@ class redmine::depends {
 			Debian => "apt",
 		},
 		before => Exec["config_redmine_mysql_bootstrap"],
-		require => [ User['redmine'], Class['apache::packages', 'mysql::packages'] ],
+#		require => [ User['redmine'], Class['apache::packages', 'mysql::packages'] ],
+	}
+
+	package { 'gem_i18n':
+		ensure => '0.4.2',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+
+	package { 'gem_mysql':
+		ensure => installed,
+		name => 'ruby-mysql',
+		provider => gem,
+		require => Package['gem_i18n'],
+	}
+
+	package { 'gem_rack':
+		ensure => '1.0.1',
+		name => 'rack',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+
+	package { 'gem_hoe':
+		ensure => installed,
+		name => 'hoe',
+		provider => gem,
+		before => Package['gem_rails'],
+	}
+
+	package { 'gem_rails':
+		ensure => installed,
+		name => 'rails',
+		provider => gem,
+		before => Exec['config_redmine_mysql_bootstrap'],
+	}
+
+	package { 'curl-devel':
+		ensure => installed,
+		name => $operatingsystem ? {
+			Centos => 'curl-devel',
+			Debian => 'libcurl4-openssl-dev',
+		},
 	}
 }
 
 class redmine::depends::debian {
-	package { 'redmine-mysql':
+	@package { 'redmine-mysql':
 		ensure => installed,
 		require => Package['redmine'],
+	}
+
+	if $operatingsystem == 'Debian' {
+		realize(Package['redmine-mysql'])
 	}
 }
 
@@ -60,43 +106,5 @@ class redmine::depends::centos {
 		mode => 0755,
 		before => Class['redmine::config'],
 		require => Exec['redmine_centos'],
-	}
-
-	package { 'gem_i18n':
-		ensure => '0.4.2',
-		provider => gem,
-		before => Package['gem_rails'],
-	}
-
-	package { 'gem_mysql':
-		ensure => installed,
-		name => 'ruby-mysql',
-		provider => gem,
-		require => [ Package['gem_i18n'], Yumrepo['epel'] ],
-	}
-
-	package { 'gem_rack':
-		ensure => '1.0.1',
-		name => 'rack',
-		provider => gem,
-		before => Package['gem_rails'],
-	}
-
-	package { 'gem_hoe':
-		ensure => installed,
-		name => 'hoe',
-		provider => gem,
-		before => Package['gem_rails'],
-	}
-
-	package { 'gem_rails':
-		ensure => installed,
-		name => 'rails',
-		provider => gem,
-		before => Exec['config_redmine_mysql_bootstrap'],
-	}
-
-	package { 'curl-devel':
-		ensure => installed,
 	}
 }
