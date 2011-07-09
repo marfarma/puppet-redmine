@@ -1,7 +1,7 @@
 import 'pre.pp'
+import 'depends.pp'
 import 'core.pp'
 import 'config.pp'
-import 'depends.pp'
 
 class redmine {
 	include redmine::pre
