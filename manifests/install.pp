@@ -6,7 +6,7 @@ class redmine::install {
 
 	$redmine_id = $operatingsystem ? {
 		/Debian|Ubuntu/ => 'www-data',
-		/Centos|Fedora/ => 'apache',
+		Centos => 'apache',
 	}
 
 	group { redmine:
@@ -59,15 +59,15 @@ class redmine::install::debian {
 }
 
 class redmine::install::centos {
-	file { '$HOME/.netrc':
+	file { '/home/$USER/.netrc':
 		content => 'machine ftp.ruby-lang.org login anonymous password anonymous\nmacdef init\nprompt\ncd /pub/ruby\nget ruby-1.8.7-p334.tar.gz\nbye',
 	}
 
-#	exec { 'redmine_centos':
-#		path => '/bin:/usr/bin',
-#		command => '/bin/sh -c "cd /usr/share/;wget http://rubyforge.org/frs/download.php/74419/redmine-1.1.2.tar.gz;tar zxvf redmine-1.1.2.tar.gz;mv redmine-1.1.2 redmine;chmod -R a+rx /usr/share/redmine/public/;cd /usr/share/redmine;chmod -R 755 files log tmp"',
-#		unless => '/usr/bin/test -d /usr/share/redmine',
-#	}
+	exec { 'redmine_centos':
+		path => '/bin:/usr/bin',
+		command => '/bin/sh -c "cd /usr/share/;wget http://rubyforge.org/frs/download.php/74419/redmine-1.1.2.tar.gz;tar zxvf redmine-1.1.2.tar.gz;mv redmine-1.1.2 redmine;chmod -R a+rx /usr/share/redmine/public/;cd /usr/share/redmine;chmod -R 755 files log tmp"',
+		unless => '/usr/bin/test -d /usr/share/redmine',
+	}
 
 	file { '/usr/share/redmine-1.1.3.tar.gz':
 		ensure => present,
@@ -106,9 +106,14 @@ class redmine::install::centos {
 
 	package { 'gem_mysql':
 		ensure => installed,
-		name => mysql,
+		name => 'mysql',
 		provider => gem,
 		require => Package['gem_i18n'],
+	}
+
+	exec { 'gem_mysql_install':
+		command => 'gem install mysql --no-ri --no-rdoc',
+		path => '/bin:/usr/bin',
 	}
 
 	package { 'gem_rack':
@@ -167,7 +172,7 @@ class redmine::install::centos {
 		path => '/bin:/usr/bin',
 		command => 'echo -e "LoadModule passenger_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
 		unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger_module"',
-		require => Class['apache::mod::passenger', 'rubygems'],
+		require => [ Class['apache::mod::passenger'], Package['rubygems'] ],
 		notify => Service['apache'],
 	}
 }
@@ -181,28 +186,41 @@ class redmine::config {
 		require => Package['redmine'],
 	}
 
-	exec { 'config_redmine_mysql_db':
-		command =>  '/usr/bin/mysqladmin -uroot create redmine',
-		unless => '/bin/echo "show databases"|mysql -uroot|grep redmine',
+	exec { 'config_redmine_production_db':
+		command =>  '/usr/bin/mysqladmin -uroot create redmine_production',
+		unless => '/bin/echo "show databases"|mysql -uroot|grep "redmine_production"',
 		require => Class['mysql::packages'],
+	}
+
+	exec { 'config_redmine_development_db':
+		command =>  '/usr/bin/mysqladmin -uroot create redmine_development',
+		unless => '/bin/echo "show databases"|mysql -uroot|grep "redmine_development"',
+#		require => Exec['config_redmine_production_db'],
 	}
 
 	exec { 'config_redmine_mysql_user':
 		command =>  '/bin/echo "create user \'redmine\'@\'localhost\' identified by \'redmine\'"|mysql -uroot',
 		unless => '/bin/echo "select user from mysql.user where user=\'redmine\'"|mysql -uroot|grep redmine',
-		require => Exec['config_redmine_mysql_db'],
+		require => Exec['config_redmine_development_db'],
 	}
 
-	exec { 'config_redmine_mysql_permissions':
-		command => '/bin/echo "grant all on redmine.* to \'redmine\'@\'localhost\'"|mysql -uroot',
+	exec { 'config_redmine_production_perms':
+		command => '/bin/echo "grant all on redmine_production.* to \'redmine\'@\'localhost\'"|mysql -uroot',
 		require =>  Exec["config_redmine_mysql_user"],
+	}
+
+	exec { 'config_redmine_devel_perms':
+		command => '/bin/echo "grant all on redmine_development.* to \'redmine\'@\'localhost\'"|mysql -uroot',
+		require => Exec['config_redmine_production_perms'],
 	}
 
 	exec { 'config_redmine_mysql_bootstrap':
 		environment => 'RAILS_ENV=production',
-		path => '/usr:/usr/bin:/opt/ruby/bin',
-		command => '/bin/sh -c "cd /usr/share/redmine && sudo /opt/ruby/bin/rake db:migrate"',
-		require => Exec['config_redmine_mysql_permissions'],
+		path => '/usr:/usr/bin',
+		cwd => '/usr/share/redmine',
+#		provider => shell,
+		command => 'sudo rake db:migrate',
+		require => Exec['config_redmine_devel_perms'],
 	}
 
 	exec { 'config_redmine_reload':
@@ -211,6 +229,6 @@ class redmine::config {
 			Centos => '/etc/init.d/httpd reload',
 		},
 		require => Exec['config_redmine_mysql_bootstrap'],
-		notify => Service['apache-daemon'],
+		notify => Service['apache'],
 	}
 }
