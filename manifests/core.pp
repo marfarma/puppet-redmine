@@ -16,21 +16,6 @@ class redmine::core {
 		require => Group["$redmine_id"],
 	}
 
-	@file { '/etc/apache2/sites-available/redmine':
-		ensure => present,
-		owner => root,
-		group => root,
-		mode => 0644,
-		content => 'RailsBaseURI /redmine',
-		require => Package['redmine'],
-	}
-
-	@exec { 'config_redmine_link_apache':
-		command => '/usr/sbin/a2ensite redmine',
-		require => File['/etc/apache2/sites-available/redmine'],
-		unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine',
-	}
-
 	case $operatingsystem {
 		'Centos': {realize(Exec['build_passenger_modules', 'selinux_disable', 'session_store', 'apache_modules'], File['redmine.conf'])}
 		'Debian': {realize(File['redmine_apache.conf'], Exec['redmine_site_enable'])}
@@ -40,8 +25,21 @@ class redmine::core {
 		'redmine.conf':
 			name => '/etc/httpd/conf.d/redmine.conf',
 			ensure => present,
-			content => template('redmine/templates/apache_redmine.conf'),
+			content => template('redmine/apache_redmine.conf'),
 			notify => Service['apache'];
+
+		'passenger.conf':
+			path => '/etc/httpd/conf.d/passenger.conf',
+			content => template('redmine/apache_passenger.conf'),
+			notify => Service['apache'];
+
+		'/etc/apache2/sites-available/redmine':
+			ensure => present,
+			owner => root,
+			group => root,
+			mode => 0644,
+			content => 'RailsBaseURI /redmine',
+			require => Package['redmine'];
 	}
 
 	@exec {
@@ -49,7 +47,7 @@ class redmine::core {
 			path => '/bin:/usr/bin:/opt/ruby/bin',
 			command => 'passenger-install-apache2-module -a',
 #			require => Package['passenger'],
-			unless => 'test -f /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so';
+			unless => "test -f $RUBY_LIB_DIR/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so";
 
 		'selinux_disable':
 			path => '/bin:/usr/bin',
@@ -60,14 +58,14 @@ class redmine::core {
 
 		'session_store':
 			path => '/bin:/usr/bin:/opt/ruby/bin',
-			command => '/bin/sh -c "cd /usr/share/redmine/public && rake generate_session_store"',
+			cwd => '/usr/share/redmine/public',
+			provider => 'shell',
+			command => 'rake generate_session_store',
 			require => Package['gem_rails'];
 
-		'apache_modules':
-			path => '/bin:/usr/bin',
-			command => 'echo -e "LoadModule passenger_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
-			unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger_module"',
-#			require => [ Class['apache::mod::passenger'], Package['rubygems'] ],
-			notify => Service['apache'];
+		'config_redmine_link_apache':
+			command => '/usr/sbin/a2ensite redmine',
+			require => File['/etc/apache2/sites-available/redmine'],
+			unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine';
 	}
 }
