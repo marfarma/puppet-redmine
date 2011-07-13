@@ -2,7 +2,8 @@ class redmine::pre {
 	@exec {
 		'gem update':
 			command => 'gem update --system',
-			path => '/usr/bin:/opt/ruby/bin';
+			path => '/usr/bin:/opt/ruby/bin',
+			onlyif => 'which gem';
 
 		'apt update':
 			command => 'apt-get update',
