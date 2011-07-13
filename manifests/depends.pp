@@ -103,6 +103,5 @@ class redmine::depends {
 			ensure => present,
 			path => '/usr/share/redmine-1.2.1.tar.gz',
 			source => 'puppet:///modules/redmine/redmine-1.2.1.tar.gz';
-
 	}
 }
