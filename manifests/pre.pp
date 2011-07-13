@@ -9,7 +9,7 @@ class redmine::pre {
 			path => '/usr/bin';
 
 		'yum update':
-			command => 'yum update',
+			command => 'yum update -y',
 			path => '/usr/bin';
 	}
 
