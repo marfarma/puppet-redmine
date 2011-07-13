@@ -79,12 +79,6 @@ class redmine::depends {
 	}
 
 	@exec {
-		'redmine_sources':
-			path => '/bin:/usr/bin',
-			cwd => '/usr/share',
-			command => '/bin/sh -c "wget http://rubyforge.org/frs/download.php/74419/redmine-1.1.2.tar.gz;tar zxvf redmine-1.1.2.tar.gz;mv redmine-1.1.2 redmine;chmod -R a+rx /usr/share/redmine/public/;cd /usr/share/redmine;chmod -R 755 files log tmp"',
-			unless => '/usr/bin/test -d /usr/share/redmine';
-
 		'extract_redmine':
 			path => '/bin:/usr/bin',
 			cwd => '/usr/share',
