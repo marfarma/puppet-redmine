@@ -19,11 +19,11 @@ class redmine::depends {
 			provider => gem,
 			before => Package['gem_rails'];
 
-#		'gem_mysql':
-#			ensure => installed,
-#			name => 'mysql',
-#			provider => gem,
-#			require => Package['gem_i18n'];
+		'gem_mysqlplus':
+			ensure => installed,
+			name => 'mysqlplus',
+			provider => gem,
+			require => Package['gem_i18n'];
 
 		'gem_rack':
 			ensure => $operatingsystem ? {
@@ -63,11 +63,6 @@ class redmine::depends {
 			};
 	}
 	
-	exec { 'mysql ruby':
-		command => 'gem install mysql',
-		path => '/opt/ruby/bin:/usr/bin',
-	}
-
 	case $operatingsystem {
 		Centos: {realize(Exec['extract_redmine'], File['/etc/redmine', '/etc/redmine/default', 'redmine_source'])}
 		Debian: {realize(Package['redmine-mysql'])}
