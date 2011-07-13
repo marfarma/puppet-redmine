@@ -9,15 +9,15 @@ class redmine::core {
 		Centos => 'apache',
 	}
 
-	group { redmine:
+	group { 'redmine':
 		ensure => present,
-		name => $redmine_id,
+		name => "$redmine_id",
 	}	
 
-	user { redmine:
+	user { 'redmine':
 		ensure => present,
-		name => $redmine_id,
-		gid => $redmine_id,
+		name => "$redmine_id",
+		gid => "$redmine_id",
 		require => Group["$redmine_id"],
 	}
 }
@@ -40,16 +40,12 @@ class redmine::core::debian {
 }
 
 class redmine::core::centos {
-	file { '/home/$USER/.netrc':
-		content => 'machine ftp.ruby-lang.org login anonymous password anonymous\nmacdef init\nprompt\ncd /pub/ruby\nget ruby-1.8.7-p334.tar.gz\nbye',
-	}
-
-	exec { 'build_passenger_modules':
-		path => '/bin:/usr/bin:/opt/ruby/bin',
-		command => 'passenger-install-apache2-module -a',
-		require => Package['$package_apache_mod_passenger'],
-		unless => 'test -f /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so',
-	}
+#	exec { 'build_passenger_modules':
+#		path => '/bin:/usr/bin:/opt/ruby/bin',
+#		command => 'passenger-install-apache2-module -a',
+#		require => Package['passenger'],
+#		unless => 'test -f /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so',
+#	}
 
 	exec { 'selinux_disable':
 		path => '/bin:/usr/bin',
@@ -71,11 +67,11 @@ class redmine::core::centos {
 		notify => Service['apache'],
 	}
 
-	exec { 'apache_modules':
-		path => '/bin:/usr/bin',
-		command => 'echo -e "LoadModule passenger_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
-		unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger_module"',
-		require => [ Class['apache::mod::passenger'], Package['rubygems'] ],
-		notify => Service['apache'],
-	}
+#	exec { 'apache_modules':
+#		path => '/bin:/usr/bin',
+#		command => 'echo -e "LoadModule passenger_module /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so\nPassengerRoot /opt/ruby/lib/ruby/gems/1.8/gems/passenger-3.0.7\nPassengerRuby /opt/ruby/bin/ruby" >> /etc/httpd/conf/httpd.conf',
+#		unless => 'cat /etc/httpd/conf/httpd.conf|grep "LoadModule passenger_module"',
+#		require => [ Class['apache::mod::passenger'], Package['rubygems'] ],
+#		notify => Service['apache'],
+#	}
 }
