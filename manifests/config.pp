@@ -54,8 +54,8 @@ class redmine::config {
 		environment => 'RAILS_ENV=production',
 		path => '/usr:/usr/bin',
 		cwd => '/usr/share/redmine',
-#		provider => shell,
-		command => 'sudo rake db:migrate',
+		provider => shell,
+		command => 'rake db:migrate',
 		require => Exec['config_redmine_devel_perms'],
 	}
 
