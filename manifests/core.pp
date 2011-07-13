@@ -17,7 +17,7 @@ class redmine::core {
 	}
 
 	case $operatingsystem {
-		'Centos': {realize(Exec['build_passenger_modules', 'selinux_disable', 'session_store', 'apache_modules'], File['redmine.conf'])}
+		'Centos': {realize(Exec['build_passenger_modules', 'selinux_disable', 'session_store'], File['redmine.conf', 'passenger.conf'])}
 		'Debian': {realize(File['redmine_apache.conf'], Exec['redmine_site_enable'])}
 	}
 
