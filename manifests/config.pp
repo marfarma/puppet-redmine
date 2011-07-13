@@ -57,14 +57,6 @@ class redmine::config {
 		provider => shell,
 		command => 'rake db:migrate',
 		require => Exec['config_redmine_devel_perms'],
-	}
-
-	exec { 'config_redmine_reload':
-		command => $operatingsystem ? {
-			Debian => '/etc/init.d/apache2 reload',
-			Centos => '/etc/init.d/httpd reload',
-		},
-		require => Exec['config_redmine_mysql_bootstrap'],
-		notify => Service['apache'],
+		notify => Service['apache'];
 	}
 }
