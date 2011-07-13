@@ -83,8 +83,8 @@ class redmine::depends {
 			path => '/bin:/usr/bin',
 			cwd => '/usr/share',
 			provider => shell,
-			command => 'tar xzvf redmine-1.1.3.tar.gz && mv redmine{-1.1.3,}',
-			require => File['/usr/share/redmine-1.1.3.tar.gz'],
+			command => 'tar xzvf redmine-1.2.1.tar.gz && mv redmine{-1.2.1,}',
+			require => File['/usr/share/redmine-1.2.1.tar.gz'],
 			creates => '/usr/share/redmine';
 	}
 
@@ -106,7 +106,7 @@ class redmine::depends {
 
 		'redmine_source':
 			ensure => present,
-			path => '/usr/share/redmine-1.1.3.tar.gz',
+			path => '/usr/share/redmine-1.2.1.tar.gz',
 			source => 'puppet:///modules/redmine/redmine.tar.gz';
 
 	}
