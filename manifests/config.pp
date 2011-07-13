@@ -13,10 +13,6 @@ class redmine::config {
 			Debian => '/etc/redmine/default/database.yml',
 			Centos => '/usr/share/redmine/config/database.yml',
 		},
-		require => $operatingsystem ? {
-			Debian => Package['redmine'],
-			Centos => Exec['redmine_centos'],
-		},
 		content => template("redmine/database.yml.erb"),
 	}
 
@@ -25,13 +21,11 @@ class redmine::config {
 		target => '/usr/share/redmine/public',
 		owner => $redmine_id,
 		group => $redmine_id,
-		require => Package['redmine'],
 	}
 
 	exec { 'config_redmine_production_db':
 		command =>  '/usr/bin/mysqladmin -uroot create redmine_production',
 		unless => '/bin/echo "show databases"|mysql -uroot|grep "redmine_production"',
-		require => Class['mysql::packages'],
 	}
 
 	exec { 'config_redmine_development_db':
