@@ -47,7 +47,7 @@ class redmine::core {
 			path => '/bin:/usr/bin:/opt/ruby/bin',
 			command => 'passenger-install-apache2-module -a',
 #			require => Package['passenger'],
-			unless => "test -f $RUBY_LIB_DIR/ruby/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so";
+			unless => "test -f $ruby_lib_dir/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so";
 
 		'selinux_disable':
 			path => '/bin:/usr/bin',
