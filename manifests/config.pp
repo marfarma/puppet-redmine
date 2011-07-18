@@ -27,7 +27,9 @@ class redmine_config {
 	exec { 'config_redmine_mysql_bootstrap':
 		environment => 'RAILS_ENV=production',
 		path => '/usr:/usr/bin:/opt/ruby/bin',
-		command => '/bin/sh -c "cd /usr/share/redmine && sudo /opt/ruby/bin/rake db:migrate"',
+		cwd => '/usr/share/redmine',
+		provider => shell,
+		command => '/opt/ruby/bin/rake db:migrate',
 		require => Exec['config_redmine_mysql_permissions'],
 	}
 
