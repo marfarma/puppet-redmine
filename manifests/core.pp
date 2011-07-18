@@ -18,7 +18,7 @@ class redmine::core {
 
 	case $operatingsystem {
 		'Centos': {realize(Exec['build_passenger_modules', 'selinux_disable', 'session_store'], File['redmine.conf', 'passenger.conf'])}
-		'Debian': {realize(File['redmine_apache.conf'], Exec['redmine_site_enable'])}
+		'Debian': {realize(File['sites-available redmine'], Exec['redmine site enable'])}
 	}
 
 	@file {
@@ -33,7 +33,8 @@ class redmine::core {
 			content => template('redmine/apache_passenger.conf'),
 			notify => Service['apache'];
 
-		'/etc/apache2/sites-available/redmine':
+		'sites-available redmine':
+			path => '/etc/apache2/sites-available/redmine',
 			ensure => present,
 			owner => root,
 			group => root,
@@ -63,7 +64,7 @@ class redmine::core {
 			command => 'rake generate_session_store',
 			require => Package['gem_rails'];
 
-		'config_redmine_link_apache':
+		'redmine site enable':
 			command => '/usr/sbin/a2ensite redmine',
 			require => File['/etc/apache2/sites-available/redmine'],
 			unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine';

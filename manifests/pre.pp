@@ -1,4 +1,12 @@
 class redmine::pre {
+	user { 'puppet':
+		ensure => present,
+	}
+
+	group { 'puppet':
+		ensure => present,
+	}
+
 	@exec {
 		'gem update':
 			command => 'gem update --system',
