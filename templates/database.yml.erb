@@ -1,15 +1,15 @@
 production:
   adapter: mysql
   database: <%= production_db %>
-  username: <%= redmine_db_user %>
-  password: <%= redmine_db_pass %>
+  username: <%= dbuser %>
+  password: <%= dbpass %>
   host: localhost
   encoding: utf8
 
 development:
   adapter: mysql
-  database: <%= development_db %>
-  username: <%= redmine_db_user %>
-  password: <%= redmine_db_pass %>
+  database: <%= devel_db %>
+  username: <%= dbuser %>
+  password: <%= dbpass %>
   host: localhost
   encoding: utf8
