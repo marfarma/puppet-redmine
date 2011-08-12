@@ -3,9 +3,23 @@ import 'depends.pp'
 import 'core.pp'
 import 'config.pp'
 
-class redmine {
-	include redmine::pre
-	include redmine::depends
-	include redmine::core
-	include redmine::config
+class redmine (
+	$webserver = 'httpd',
+	$stages = 'no'
+) {
+	if $stages == 'no' {
+		class{'redmine::pre':} -> class{'redmine::depends':} -> class{'redmine::core':} -> class{'redmine::config':}
+	} else {
+		class {
+			'redmine::pre':
+				stage => pre;
+			'redmine::depends':
+				stage => depends,
+				require => Class['ruby'];
+			'redmine::core':
+				stage => core;
+			'redmine::config':
+				stage => config;
+		}
+	}
 }
