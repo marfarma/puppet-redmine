@@ -25,13 +25,13 @@ class redmine::core {
 		'redmine.conf':
 			name => '/etc/httpd/conf.d/redmine.conf',
 			ensure => present,
-			content => template('redmine/apache_redmine.conf'),
-			notify => Service['apache'];
+#			notify => Service["$webserver"],
+			content => template('redmine/apache_redmine.conf');
 
 		'passenger.conf':
 			path => '/etc/httpd/conf.d/passenger.conf',
-			content => template('redmine/apache_passenger.conf'),
-			notify => Service['apache'];
+#			notify => Service["$webserver"],
+			content => template('redmine/apache_passenger.conf');
 
 		'sites-available redmine':
 			path => '/etc/apache2/sites-available/redmine',
@@ -53,9 +53,9 @@ class redmine::core {
 		'selinux_disable':
 			path => '/bin:/usr/bin',
 			command => 'system-config-securitylevel-tui -q --selinux="disabled"',
-			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"',
-			before => Service['apache'],
-			notify => Service['apache'];
+			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"';
+#			notify => Service["$webserver"],
+#			before => Service["$webserver"];
 
 		'session_store':
 			path => '/bin:/usr/bin:/opt/ruby/bin',
