@@ -57,6 +57,6 @@ class redmine::config {
 		provider => shell,
 		command => 'rake db:migrate',
 		require => Exec['config_redmine_devel_perms'],
-		notify => Service["$webserver"];
+		notify => Service["$redmine::webserver"];
 	}
 }
