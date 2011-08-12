@@ -5,6 +5,10 @@ import 'config.pp'
 
 class redmine (
 	$webserver = 'httpd',
+	$production_db = 'redmine_production',
+	$devel_db = 'redmine_devel',
+	$dbuser = 'redmine',
+	$dbpass = 'redmine',
 	$stages = 'no'
 ) {
 	if $stages == 'no' {
