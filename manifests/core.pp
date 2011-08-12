@@ -17,7 +17,7 @@ class redmine::core {
 	}
 
 	case $operatingsystem {
-		'Centos': {realize(Exec['build_passenger_modules', 'selinux_disable', 'session_store'], File['redmine.conf', 'passenger.conf'])}
+		'Centos': {realize(Exec['selinux_disable', 'session_store'], File['redmine.conf'])}
 		'Debian': {realize(File['sites-available redmine'], Exec['redmine site enable'])}
 	}
 
@@ -27,11 +27,6 @@ class redmine::core {
 			ensure => present,
 #			notify => Service["$webserver"],
 			content => template('redmine/apache_redmine.conf');
-
-		'passenger.conf':
-			path => '/etc/httpd/conf.d/passenger.conf',
-#			notify => Service["$webserver"],
-			content => template('redmine/apache_passenger.conf');
 
 		'sites-available redmine':
 			path => '/etc/apache2/sites-available/redmine',
@@ -44,12 +39,6 @@ class redmine::core {
 	}
 
 	@exec {
-		'build_passenger_modules':
-			path => '/bin:/usr/bin:/opt/ruby/bin',
-			command => 'passenger-install-apache2-module -a',
-#			require => Package['passenger'],
-			unless => "test -f $ruby_lib_dir/gems/1.8/gems/passenger-3.0.7/ext/apache2/mod_passenger.so";
-
 		'selinux_disable':
 			path => '/bin:/usr/bin',
 			command => 'system-config-securitylevel-tui -q --selinux="disabled"',
