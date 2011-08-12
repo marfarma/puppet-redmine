@@ -12,7 +12,7 @@ class redmine (
 	$stages = 'no'
 ) {
 	if $stages == 'no' {
-		class{'redmine::pre':} -> class{'redmine::depends':} -> class{'redmine::core':} -> class{'redmine::config':}
+		class{'redmine::pre':} -> class{'redmine::depends':} -> class{'redmine::core':} -> class{'redmine::dbconf') -> class{'redmine::config':}
 	} else {
 		class {
 			'redmine::pre':
@@ -22,6 +22,8 @@ class redmine (
 				require => Class['ruby'];
 			'redmine::core':
 				stage => core;
+			'redmine::dbconf':
+				stage => config;
 			'redmine::config':
 				stage => config;
 		}
