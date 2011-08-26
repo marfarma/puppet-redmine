@@ -9,7 +9,8 @@ class redmine (
 	$devel_db = 'redmine_devel',
 	$dbuser = 'redmine',
 	$dbpass = 'redmine',
-	$stages = 'no'
+	$stages = 'no',
+	$home = '/usr/share/redmine'
 ) {
 	if $stages == 'no' {
 		class{'redmine::pre':} -> class{'redmine::depends':} -> class{'redmine::core':} -> class{'redmine::dbconf':} -> class{'redmine::config':}
