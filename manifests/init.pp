@@ -1,7 +1,5 @@
-import 'pre.pp'
-import 'depends.pp'
-import 'core.pp'
-import 'config.pp'
+import 'classes/*'
+import 'definitions/*'
 
 class redmine (
 	$webserver = 'httpd',
@@ -13,7 +11,17 @@ class redmine (
 	$home = '/usr/share/redmine'
 ) {
 	if $stages == 'no' {
-		class{'redmine::pre':} -> class{'redmine::depends':} -> class{'redmine::core':} -> class{'redmine::dbconf':} -> class{'redmine::config':}
+		class{
+			'redmine::pre':
+				before => Class['redmine::depends'];
+			'redmine::depends':
+				before => Class['redmine::core'];
+			'redmine::core':
+				before => Class['redmine::dbconf'];
+			'redmine::dbconf':
+				before => Class['redmine::config'];
+			'redmine::config':
+		}
 	} else {
 		class {
 			'redmine::pre':
