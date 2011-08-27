@@ -19,6 +19,7 @@ class redmine (
 			'redmine::core':
 				before => Class['redmine::dbconf'];
 			'redmine::dbconf':
+				require => Service['mysqld'],
 				before => Class['redmine::config'];
 			'redmine::config':
 		}
