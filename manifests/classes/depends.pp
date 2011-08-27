@@ -66,7 +66,7 @@ class redmine::depends {
 	}
 	
 	case $operatingsystem {
-		Centos: {realize(Exec['extract_redmine'], File['/etc/redmine', '/etc/redmine/default', 'redmine_source'])}
+		default: {realize(Exec['extract_redmine'], File['/etc/redmine', '/etc/redmine/default', 'redmine_source'])}
 		Debian: {realize(Package['redmine-mysql'])}
 	}
 
