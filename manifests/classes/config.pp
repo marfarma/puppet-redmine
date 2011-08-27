@@ -11,17 +11,21 @@ class redmine::config {
 		content => template("redmine/database.yml.erb"),
 	}
 
-	file { '/var/www/redmine':
-		ensure => link,
-		target => '/usr/share/redmine/public',
-		owner => $redmine_id,
-		group => $redmine_id,
+	file {
+		'/var/www':
+			ensure => directory;
+
+		'/var/www/redmine':
+			ensure => link,
+			target => "$redmine::home/public",
+			owner => $redmine_id,
+			group => $redmine_id;
 	}
 
 	exec { 'config_redmine_mysql_bootstrap':
 		environment => 'RAILS_ENV=production',
 		path => '/usr:/usr/bin',
-		cwd => '/usr/share/redmine',
+		cwd => "$redmine::home",
 		provider => shell,
 		command => 'rake db:migrate',
 		require => Mysql_db[$redmine::production_db],
