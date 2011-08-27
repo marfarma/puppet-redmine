@@ -18,13 +18,17 @@ class redmine::core {
 	}
 
 	case $operatingsystem {
-		'Centos': {realize(Exec['selinux_disable', 'session_store'], File['redmine.conf'])}
-		'Debian': {realize(File['sites-available redmine'], Exec['redmine site enable'])}
+		default: {realize(Exec['session_store'], File['redmine.conf'])}
+		centos: {realize(Exec['selinux_disable', 'session_store'], File['redmine.conf'])}
+		debian: {realize(File['sites-available redmine'], Exec['redmine site enable'])}
 	}
 
 	@file {
 		'redmine.conf':
-			name => '/etc/httpd/conf.d/redmine.conf',
+			name => $::operatingsystem ? {
+				default => '/etc/httpd/conf.d/redmine.conf',
+				archlinux => '/etc/httpd/conf/redmine.conf',
+			},
 			ensure => present,
 #			notify => Service["$webserver"],
 			content => template('redmine/apache_redmine.conf');
