@@ -1,6 +1,7 @@
 class redmine::pre {
 	user { 'puppet':
 		ensure => present,
+		gid => 'puppet',
 	}
 
 	group { 'puppet':
