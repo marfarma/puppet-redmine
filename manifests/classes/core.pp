@@ -1,5 +1,6 @@
 class redmine::core {
 	$redmine_id = $operatingsystem ? {
+		archlinux => 'http',
 		/Debian|Ubuntu/ => 'www-data',
 		Centos => 'apache',
 	}

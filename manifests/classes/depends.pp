@@ -5,9 +5,10 @@ class redmine::depends {
 			name => $operatingsystem ? {
 				Centos => 'redmine_client',
 				Debian => 'redmine',
+				archlinux => 'redmine_client',
 			},
 			provider => $operatingsystem ? {
-				Centos => "gem",
+				default => "gem",
 				Debian => "apt",
 			},
 			before => Exec["config_redmine_mysql_bootstrap"];
@@ -27,7 +28,7 @@ class redmine::depends {
 
 		'gem_rack':
 			ensure => $operatingsystem ? {
-				Centos => '1.1.1',
+				default => '1.1.1',
 				Debian => '1.0.1',
 			},
 			name => 'rack',
@@ -48,7 +49,7 @@ class redmine::depends {
 
 		'gem_rails':
 			ensure => $operatingsystem ? {
-				Centos => '2.3.11',
+				default => '2.3.11',
 				Debian => '2.3.5',
 			},
 			name => 'rails',
@@ -58,6 +59,7 @@ class redmine::depends {
 		'curl-devel':
 			ensure => installed,
 			name => $operatingsystem ? {
+				archlinux => 'curl',
 				Centos => 'libcurl-devel',
 				Debian => 'libcurl4-openssl-dev',
 			};

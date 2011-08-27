@@ -1,16 +1,16 @@
 class redmine::dbconf {
 	mysql_user {
-		$dbuser:
-			pass => $dbpass;
+		$redmine::dbuser:
+			pass => $redmine::dbpass;
 	}
 
 	mysql_db {
-		$production_db:
-			user => $dbuser,
-			pass => $dbpass;
+		$redmine::production_db:
+			user => $redmine::dbuser,
+			pass => $redmine::dbpass;
 
-		$devel_db:
-			user => $dbuser,
-			pass => $dbpass;
+		$redmine::devel_db:
+			user => $redmine::dbuser,
+			pass => $redmine::dbpass;
 	}
 }

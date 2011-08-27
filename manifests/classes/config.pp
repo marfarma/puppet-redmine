@@ -5,8 +5,8 @@ class redmine::config {
 		owner => $redmine_id,
 		group => $redmine_id,
 		path => $operatingsystem ? {
+			default => '/usr/share/redmine/config/database.yml',
 			Debian => '/etc/redmine/default/database.yml',
-			Centos => '/usr/share/redmine/config/database.yml',
 		},
 		content => template("redmine/database.yml.erb"),
 	}
@@ -24,7 +24,7 @@ class redmine::config {
 		cwd => '/usr/share/redmine',
 		provider => shell,
 		command => 'rake db:migrate',
-		require => Mysql_db[$production_db],
+		require => Mysql_db[$redmine::production_db],
 		notify => Service["$redmine::webserver"];
 	}
 }
