@@ -27,7 +27,7 @@ class redmine::core {
 		'redmine.conf':
 			name => $::operatingsystem ? {
 				default => '/etc/httpd/conf.d/redmine.conf',
-				archlinux => '/etc/httpd/conf/redmine.conf',
+				archlinux => '/etc/httpd/conf/extra/redmine.conf',
 			},
 			ensure => present,
 #			notify => Service["$webserver"],
