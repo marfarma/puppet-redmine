@@ -22,13 +22,22 @@ class redmine::config {
 			group => $redmine_id;
 	}
 
-	exec { 'config_redmine_mysql_bootstrap':
-		environment => 'RAILS_ENV=production',
-		path => '/usr:/usr/bin',
-		cwd => "$redmine::home",
-		provider => shell,
-		command => 'rake db:migrate',
-		require => Mysql_db[$redmine::production_db],
-		notify => Service["$redmine::webserver"];
+	exec {
+		'config_redmine_mysql_bootstrap':
+			environment => 'RAILS_ENV=production',
+			path => '/usr:/usr/bin',
+			cwd => "$redmine::home",
+			provider => shell,
+			command => 'rake db:migrate',
+			require => Mysql_db[$redmine::production_db],
+			notify => Service["$redmine::webserver"];
+	}
+
+	if $::operatingsystem == 'archlinux' {
+		exec {
+			'include redmine.conf':
+				command => 'echo -e "\n# Redmine config\nInclude conf/extra/redmine.conf" >> /etc/httpd/conf/httpd.conf',
+				require => File['apache.conf'];
+		}
 	}
 }
