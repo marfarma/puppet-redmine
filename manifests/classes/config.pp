@@ -31,6 +31,10 @@ class redmine::config {
 			command => 'rake db:migrate',
 			require => Mysql_db[$redmine::production_db],
 			notify => Service["$redmine::webserver"];
+
+		'chown redmine':
+			command => "chown -R $redmine_id:$redmine_id $redmine::home",
+			provider => shell;
 	}
 
 	if $::operatingsystem == 'archlinux' {
