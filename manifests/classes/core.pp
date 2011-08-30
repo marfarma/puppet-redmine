@@ -1,5 +1,5 @@
 class redmine::core {
-	$redmine_id = $operatingsystem ? {
+	$redmine_id = $::operatingsystem ? {
 		archlinux => 'http',
 		/Debian|Ubuntu/ => 'www-data',
 		Centos => 'apache',
@@ -17,7 +17,7 @@ class redmine::core {
 		require => Group["$redmine_id"],
 	}
 
-	case $operatingsystem {
+	case $::operatingsystem {
 		default: {realize(Exec['session_store'], File['redmine.conf'])}
 		centos: {realize(Exec['selinux_disable', 'session_store'], File['redmine.conf'])}
 		debian: {realize(File['sites-available redmine'], Exec['redmine site enable'])}

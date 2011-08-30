@@ -2,12 +2,12 @@ class redmine::depends {
 	package {
 		redmine:
 			ensure => installed,
-			name => $operatingsystem ? {
+			name => $::operatingsystem ? {
 				Centos => 'redmine_client',
 				Debian => 'redmine',
 				archlinux => 'redmine_client',
 			},
-			provider => $operatingsystem ? {
+			provider => $::operatingsystem ? {
 				default => "gem",
 				Debian => "apt",
 			},
@@ -27,7 +27,7 @@ class redmine::depends {
 			require => Package['gem_i18n'];
 
 		'gem_rack':
-			ensure => $operatingsystem ? {
+			ensure => $::operatingsystem ? {
 				default => '1.1.1',
 				Debian => '1.0.1',
 			},
@@ -48,7 +48,7 @@ class redmine::depends {
 */
 
 		'gem_rails':
-			ensure => $operatingsystem ? {
+			ensure => $::operatingsystem ? {
 				default => '2.3.11',
 				Debian => '2.3.5',
 			},
@@ -58,14 +58,14 @@ class redmine::depends {
 
 		'curl-devel':
 			ensure => installed,
-			name => $operatingsystem ? {
+			name => $::operatingsystem ? {
 				archlinux => 'curl',
 				Centos => 'libcurl-devel',
 				Debian => 'libcurl4-openssl-dev',
 			};
 	}
 	
-	case $operatingsystem {
+	case $::operatingsystem {
 		default: {realize(Exec['extract_redmine'], File['/etc/redmine', '/etc/redmine/default', 'redmine_source'])}
 		Debian: {realize(Package['redmine-mysql'])}
 	}

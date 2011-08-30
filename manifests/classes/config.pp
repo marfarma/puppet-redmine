@@ -4,7 +4,7 @@ class redmine::config {
 		ensure => present,
 		owner => $redmine_id,
 		group => $redmine_id,
-		path => $operatingsystem ? {
+		path => $::operatingsystem ? {
 			default => '/usr/share/redmine/config/database.yml',
 			Debian => '/etc/redmine/default/database.yml',
 		},

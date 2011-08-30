@@ -25,7 +25,7 @@ class redmine::pre {
 
 #	realize(Exec['gem update'])
 
-	case $operatingsystem {
+	case $::operatingsystem {
 		Centos: {realize(Exec['yum update'])}
 		Debian: {realize(Exec['apt update'])}
 	}
