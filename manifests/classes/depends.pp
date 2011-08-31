@@ -24,7 +24,7 @@ class redmine::depends {
 			ensure => installed,
 			name => 'mysqlplus',
 			provider => gem,
-			require => Package['gem_i18n'];
+			require => Package['gem_i18n', 'mysql-dev'];
 
 		'gem_rack':
 			ensure => $::operatingsystem ? {
