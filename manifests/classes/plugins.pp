@@ -2,7 +2,8 @@ class redmine::plugins {
 	@redmine::plugin {
 		'gitosis':
 			name => 'redmine_gitosis',
-			url => 'https://github.com/DarwinAwardWinner/redmine_git_hosting.git';
+			url => 'https://github.com/DarwinAwardWinner/redmine_git_hosting.git',
+			gems => ['lockfile', 'inifile', 'net-ssh'];
 	}
 
 	if $redmine::plugins != '' {
