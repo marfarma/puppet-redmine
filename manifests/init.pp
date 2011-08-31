@@ -8,7 +8,8 @@ class redmine (
 	$dbuser = 'redmine',
 	$dbpass = 'redmine',
 	$stages = 'no',
-	$home = '/usr/share/redmine'
+	$home = '/usr/share/redmine',
+	$plugins
 ) {
 	if $stages == 'no' {
 		class{
@@ -22,6 +23,8 @@ class redmine (
 				require => Service['mysqld'],
 				before => Class['redmine::config'];
 			'redmine::config':
+				before => Class['redmine::plugins'];
+			'redmine::plugins':;
 		}
 	} else {
 		class {
@@ -35,6 +38,9 @@ class redmine (
 			'redmine::dbconf':
 				stage => config;
 			'redmine::config':
+				stage => config;
+			'redmine::plugins':
+				require => Class['redmine::config'],
 				stage => config;
 		}
 	}
