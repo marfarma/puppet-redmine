@@ -6,7 +6,22 @@ class redmine::plugins {
 			gems => ['lockfile', 'inifile', 'net-ssh'];
 	}
 
-	if $redmine::plugins != '' {
-		realize(Redmine::Plugin["$redmine::plugins"])
+	if $plugins != '' {
+		realize(Redmine::Plugin[$redmine::plugins])
 	}
+
+/*
+	class gitosis {
+
+	$gems_array = ['inifile', 'lockfile', 'net-ssh']
+
+		package {
+			$gems_array:
+				ensure => present,
+				provider => gem;
+		}
+
+		realize(Redmine::Plugin["gitosis"])
+	}
+*/
 }

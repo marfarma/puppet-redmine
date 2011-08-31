@@ -12,31 +12,26 @@ define redmine::plugin (
 			creates => "$plugin_dir/$name";
 #			require => Package["deps_$name", "gems_$name"];
 
-		"install_plugin_gitosis":
+		"install_plugin_$name":
 			command => 'rake db:migrate_plugins',
 			cwd => "$redmine::home",
 			environment => 'RAILS_ENV=production',
 			require => Exec["git_pull_$name"];
 	}
 
-# this should split an array - but it doesn't :(
-# $gems_array = split($gems, ',')
-
 	@package {
-		"deps_$name":
-			name => $deps,
+		$deps:
 			ensure => present;
-		"gems_$name":
-			name => $gems,
+		$gems:
 			provider => gem,
 			ensure => present;
 	}
 
 	if $deps != '' {
-		realize(Package["deps_$name"])
+		realize(Package[$deps])
 	}
 
 	if $gems != '' {
-		realize(Package["gems_$name"])
+		realize(Package[$gems])
 	}
 }
