@@ -6,7 +6,7 @@ class redmine::plugins {
 			gems => ['lockfile', 'inifile', 'net-ssh'];
 	}
 
-	if $plugins != '' {
+	if $redmine::plugins != '' {
 		realize(Redmine::Plugin[$redmine::plugins])
 	}
 }
