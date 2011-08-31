@@ -5,7 +5,7 @@ define redmine::plugin (
 ) {
 	exec {
 		"git_pull_$name":
-			command => "git clone $url",
+			command => "git clone $url $name",
 			cwd => "$plugin_dir";
 	}
 }
