@@ -9,6 +9,10 @@ class redmine::plugins {
 			name => 'redmine_gitosis',
 			url => 'https://github.com/y8/redmine-gitosis.git',
 			gems => ['lockfile', 'inifile', 'net-ssh'];
+
+		'gravatar-helper':
+			name => 'gravatar-helper',
+			url => 'http://mattmccray.com/svn/rails/plugins/gravatar_helper';
 	}
 
 	if $redmine::plugins != '' {
