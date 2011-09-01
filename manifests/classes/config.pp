@@ -1,17 +1,23 @@
 class redmine::config {
 
-	file { 'database.yml':
-		ensure => present,
-		owner => $redmine_id,
-		group => $redmine_id,
-		path => $::operatingsystem ? {
-			default => '/usr/share/redmine/config/database.yml',
-			Debian => '/etc/redmine/default/database.yml',
-		},
-		content => template("redmine/database.yml.erb"),
-	}
-
 	file {
+		'database.yml':
+			ensure => present,
+			owner => $redmine_id,
+			group => $redmine_id,
+			path => $::operatingsystem ? {
+				default => '/usr/share/redmine/config/database.yml',
+				Debian => '/etc/redmine/default/database.yml',
+			},
+			content => template("redmine/database.yml.erb");
+
+		'email.yml':
+			ensure => present,
+			owner => $redmine_id,
+			group => $redmine_id,
+			path => "$redmine::home/config/email.yml",
+			content => template('redmine/email.yml.erb');
+
 		'/var/www':
 			ensure => directory;
 
