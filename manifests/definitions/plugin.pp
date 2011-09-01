@@ -2,8 +2,8 @@ define redmine::plugin (
 	$name,
 	$url,
 	$plugin_dir = "$redmine::home/vendor/plugins",
-	$deps = '',
-	$gems = ''
+	$deps = [],
+	$gems = []
 ) {
 	exec {
 		"git_pull_$name":
@@ -27,11 +27,11 @@ define redmine::plugin (
 			ensure => present;
 	}
 
-	if $deps != '' {
+	if $deps != [] {
 		realize(Package[$deps])
 	}
 
-	if $gems != '' {
+	if $gems != [] {
 		realize(Package[$gems])
 	}
 }
