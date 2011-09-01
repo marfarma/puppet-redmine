@@ -9,7 +9,14 @@ class redmine (
 	$dbpass = 'redmine',
 	$stages = 'no',
 	$home = '/usr/share/redmine',
-	$plugins
+	$plugins = '',
+	$mail_user = 'redmine',
+	$mail_pass = 'redmine',
+	$mail_auth = 'plain',
+	$mail_domain,
+	$mail_port = '587',
+	$mail_smtp,
+	$mail_tls = 'true'
 ) {
 	if $stages == 'no' {
 		class{
