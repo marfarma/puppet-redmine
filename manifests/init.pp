@@ -13,9 +13,9 @@ class redmine (
 	$mail_user = 'redmine',
 	$mail_pass = 'redmine',
 	$mail_auth = 'plain',
-	$mail_domain,
+	$mail_domain = 'redmine.org',
 	$mail_port = '587',
-	$mail_smtp,
+	$mail_smtp = 'smtp.redmine.org',
 	$mail_tls = 'true'
 ) {
 	if $stages == 'no' {
