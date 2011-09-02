@@ -15,6 +15,14 @@ class redmine::plugins {
 		'gravatar-helper':
 			name => 'gravatar-helper',
 			url => 'http://mattmccray.com/svn/rails/plugins/gravatar_helper';
+
+		'bulk time entry':
+			name => 'bulk time entry',
+			url => 'https://github.com/edavis10/redmine-bulk_time_entry_plugin.git';
+
+		'pastebin':
+			name => 'pastebin',
+			url => 'git://github.com/commandprompt/redmine_pastebin.git';
 	}
 
 	if $redmine::plugins != '' {
