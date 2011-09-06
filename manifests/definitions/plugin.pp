@@ -6,17 +6,17 @@ define redmine::plugin (
 	$gems = []
 ) {
 	exec {
-		"git_pull_$name":
-			command => "git clone $url $name",
-			cwd => "$plugin_dir",
+		"install_plugin_$name":
+			command => "ruby script/plugin install $url",
+			cwd => "$redmine::home",
 			creates => "$plugin_dir/$name";
 #			require => Package["deps_$name", "gems_$name"];
 
-		"install_plugin_$name":
+		"db:migrate_plugin_$name":
 			command => 'rake db:migrate_plugins',
 			cwd => "$redmine::home",
 			environment => 'RAILS_ENV=production',
-			require => Exec["git_pull_$name"];
+			require => Exec["install_plugin_$name"];
 	}
 
 	@package {
