@@ -9,7 +9,7 @@ class redmine (
 	$dbpass = 'redmine',
 	$stages = 'no',
 	$home = '/usr/share/redmine',
-	$plugins = '',
+	$plugins = [],
 	$mail_user = 'redmine',
 	$mail_pass = 'redmine',
 	$mail_auth = 'plain',

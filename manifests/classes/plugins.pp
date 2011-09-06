@@ -23,9 +23,13 @@ class redmine::plugins {
 		'pastebin':
 			name => 'pastebin',
 			url => 'git://github.com/commandprompt/redmine_pastebin.git';
+
+		'dmfs':
+			name => 'dmfs',
+			url => 'http://redmine-dmsf.googlecode.com/svn/';
 	}
 
-	if $redmine::plugins != '' {
+	if $redmine::plugins != [] {
 		realize(Redmine::Plugin[$redmine::plugins])
 	}
 }
