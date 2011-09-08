@@ -43,7 +43,8 @@ class redmine::plugins {
 		'webdav':
 			name => 'redmine_webdav',
 			url => 'https://github.com/amartel/redmine_webdav.git',
-			require => Redmine::Plugin['http_auth'];
+			require => Redmine::Plugin['http_auth'],
+			gems => ['unicode', 'shared-mime-info'];
 
 		'schedules':
 			name => 'redmine_schedules',
