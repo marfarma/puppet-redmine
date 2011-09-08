@@ -66,6 +66,10 @@ class redmine::plugins {
 		'stuff_to_do':
 			name => 'stuff_to_do',
 			url => 'https://github.com/edavis10/redmine-stuff-to-do-plugin.git';
+
+		'redcmd':
+			name => 'redcmd',
+			url => 'https://github.com/textgoeshere/redcmd.git';
 	}
 
 	if $redmine::plugins != [] {
