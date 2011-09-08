@@ -35,6 +35,10 @@ class redmine::plugins {
 		'kanban':
 			name => 'redmine_kanban',
 			url => 'https://github.com/edavis10/redmine_kanban.git';
+
+		'timesheet':
+			name => 'redmine_timesheet',
+			url => 'https://github.com/edavis10/redmine-timesheet-plugin.git';
 	}
 
 	if $redmine::plugins != [] {
