@@ -28,6 +28,11 @@ class redmine::plugins {
 			name => 'dmsf',
 			url => 'http://redmine-dmsf.googlecode.com/svn/';
 
+		'docpu':
+			name => 'docpu',
+			url => 'https://github.com/erikkallen/redmine_doc_pu.git',
+			gems => ['RedCloth'];
+
 		'http_auth':
 			name => 'redmine_http_auth',
 			url => 'https://github.com/AdamLantos/redmine_http_auth.git';
