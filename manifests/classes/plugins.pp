@@ -40,7 +40,8 @@ class redmine::plugins {
 
 		'kanban':
 			name => 'redmine_kanban',
-			url => 'https://github.com/edavis10/redmine_kanban.git';
+			url => 'https://github.com/edavis10/redmine_kanban.git',
+			gems => ['aasm', 'block_helpers'];
 
 		'timesheet':
 			name => 'redmine_timesheet',
