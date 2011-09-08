@@ -57,6 +57,11 @@ class redmine::plugins {
 			name => 'redmine_schedules',
 			url => 'https://github.com/bradbeattie/redmine-schedules-plugin.git',
 			gems => ['holidays'];
+
+		'knowledgebase':
+			name => 'knowledgebase',
+			url => 'https://github.com/alexbevi/redmine_knowledgebase.git',
+			gems => ['acts_as_viewed', 'acts_as_rated', 'acts_as_taggable_on_steroids'];
 	}
 
 	if $redmine::plugins != [] {
