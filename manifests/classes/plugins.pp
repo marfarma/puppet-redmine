@@ -24,8 +24,8 @@ class redmine::plugins {
 			name => 'pastebin',
 			url => 'git://github.com/commandprompt/redmine_pastebin.git';
 
-		'dmfs':
-			name => 'dmfs',
+		'dmsf':
+			name => 'dmsf',
 			url => 'http://redmine-dmsf.googlecode.com/svn/';
 
 		'http_auth':
