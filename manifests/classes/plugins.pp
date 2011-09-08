@@ -27,6 +27,10 @@ class redmine::plugins {
 		'dmfs':
 			name => 'dmfs',
 			url => 'http://redmine-dmsf.googlecode.com/svn/';
+
+		'http_auth':
+			name => 'redmine_http_auth',
+			url => 'http://github.com/AdamLantos/redmine_http_auth';
 	}
 
 	if $redmine::plugins != [] {
