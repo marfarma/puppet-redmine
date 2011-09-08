@@ -10,7 +10,6 @@ define redmine::plugin (
 			command => "ruby script/plugin install $url",
 			cwd => "$redmine::home",
 			creates => "$plugin_dir/$name";
-#			require => Package["deps_$name", "gems_$name"];
 
 		"db:migrate_plugin_$name":
 			command => 'rake db:migrate_plugins',
@@ -21,10 +20,12 @@ define redmine::plugin (
 
 	@package {
 		$deps:
-			ensure => present;
+			ensure => present,
+			before => Exec["install_plugin_$name"];
 		$gems:
 			provider => gem,
-			ensure => present;
+			ensure => present,
+			before => Exec["install_plugin_$name"];
 	}
 
 	if $deps != [] {
