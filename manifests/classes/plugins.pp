@@ -39,6 +39,11 @@ class redmine::plugins {
 		'timesheet':
 			name => 'redmine_timesheet',
 			url => 'https://github.com/edavis10/redmine-timesheet-plugin.git';
+
+		'webdav':
+			name => 'redmine_webdav',
+			url => 'https://github.com/amartel/redmine_webdav.git',
+			require => Redmine::Plugin['http_auth'];
 	}
 
 	if $redmine::plugins != [] {
