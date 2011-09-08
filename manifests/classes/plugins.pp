@@ -62,6 +62,10 @@ class redmine::plugins {
 			name => 'knowledgebase',
 			url => 'https://github.com/alexbevi/redmine_knowledgebase.git',
 			gems => ['acts_as_viewed', 'acts_as_rated', 'acts_as_taggable_on_steroids'];
+
+		'stuff_to_do':
+			name => 'stuff_to_do',
+			url => 'https://github.com/edavis10/redmine-stuff-to-do-plugin.git';
 	}
 
 	if $redmine::plugins != [] {
