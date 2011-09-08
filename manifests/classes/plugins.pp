@@ -31,7 +31,7 @@ class redmine::plugins {
 		'docpu':
 			name => 'docpu',
 			url => 'https://github.com/erikkallen/redmine_doc_pu.git',
-			deps => ['texlive'],
+			deps => ['texlive', 'texlive-latex'],
 			gems => ['RedCloth'];
 
 		'http_auth':
