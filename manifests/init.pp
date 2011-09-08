@@ -32,6 +32,7 @@ class redmine (
 			'redmine::config':
 				before => Class['redmine::plugins'];
 			'redmine::plugins':;
+			'redmine::themes':;
 		}
 	} else {
 		class {
@@ -48,6 +49,8 @@ class redmine (
 				stage => config;
 			'redmine::plugins':
 				require => Class['redmine::config'],
+				stage => config;
+			'redmine::themes':
 				stage => config;
 		}
 	}
