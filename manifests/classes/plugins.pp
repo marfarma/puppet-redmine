@@ -44,6 +44,11 @@ class redmine::plugins {
 			name => 'redmine_webdav',
 			url => 'https://github.com/amartel/redmine_webdav.git',
 			require => Redmine::Plugin['http_auth'];
+
+		'schedules':
+			name => 'redmine_schedules',
+			url => 'https://github.com/bradbeattie/redmine-schedules-plugin.git',
+			gems => ['holidays'];
 	}
 
 	if $redmine::plugins != [] {
