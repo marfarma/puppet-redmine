@@ -30,7 +30,7 @@ class redmine::plugins {
 
 		'http_auth':
 			name => 'redmine_http_auth',
-			url => 'http://github.com/AdamLantos/redmine_http_auth';
+			url => 'https://github.com/AdamLantos/redmine_http_auth.git';
 	}
 
 	if $redmine::plugins != [] {
