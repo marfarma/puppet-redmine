@@ -54,5 +54,13 @@ class redmine::plugins {
 
 	if $redmine::plugins != [] {
 		realize(Redmine::Plugin[$redmine::plugins])
+
+		exec {
+			'db:migrate_plugins':
+				command => 'rake db:migrate_plugins',
+				cwd => "$redmine::home",
+				environment => 'RAILS_ENV=production',
+				require => Redmine::Plugin[$redmine::plugins];
+		}
 	}
 }
