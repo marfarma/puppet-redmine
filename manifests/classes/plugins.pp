@@ -74,6 +74,10 @@ class redmine::plugins {
 		'theme_changer':
 			name => 'theme_changer',
 			url => 'https://bitbucket.org/haru_iida/redmine_theme_changer';
+
+		'sidebar_content':
+			name => 'sidebar_plugin',
+			url => 'http://svn.s-andy.com/redmine-sidebar';
 	}
 
 	if $redmine::plugins != [] {
