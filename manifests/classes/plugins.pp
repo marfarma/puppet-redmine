@@ -70,6 +70,10 @@ class redmine::plugins {
 		'redcmd':
 			name => 'redcmd',
 			url => 'https://github.com/textgoeshere/redcmd.git';
+
+		'theme_changer':
+			name => 'theme_changer',
+			url => 'https://bitbucket.org/haru_iida/redmine_theme_changer';
 	}
 
 	if $redmine::plugins != [] {
