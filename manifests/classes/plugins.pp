@@ -90,6 +90,10 @@ class redmine::plugins {
 		'issue_relations':
 			name => 'redmine_context_menu_relations',
 			url => 'https://github.com/edavis10/redmine_context_menu_relations.git';
+
+		'irc_gateway':
+			name => 'redmine_irc_gateway',
+			url => 'https://github.com/hackers/redmine_irc_gateway.git';
 	}
 
 	if $redmine::plugins != [] {
