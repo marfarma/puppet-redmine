@@ -11,6 +11,9 @@ class redmine::themes {
 
 		'pixelcookers':
 			url => 'https://github.com/pixel-cookers/RedmineThemePixelCookers.git';
+
+		'squeejee':
+			url => 'https://github.com/edavis10/squeejee_theme.git';
 	}
 
 	if $redmine::themes {
