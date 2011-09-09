@@ -78,6 +78,10 @@ class redmine::plugins {
 		'sidebar_content':
 			name => 'sidebar_plugin',
 			url => 'http://svn.s-andy.com/redmine-sidebar';
+
+		'tags':
+			name => 'redmine_tags',
+			url => 'https://github.com/ixti/redmine_tags.git';
 	}
 
 	if $redmine::plugins != [] {
