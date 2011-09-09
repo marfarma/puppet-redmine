@@ -82,6 +82,10 @@ class redmine::plugins {
 		'tags':
 			name => 'redmine_tags',
 			url => 'https://github.com/ixti/redmine_tags.git';
+
+		'hudson':
+			name => 'redmine_hudson',
+			url => 'https://github.com/AlekSi/redmine_hudson.git';
 	}
 
 	if $redmine::plugins != [] {
