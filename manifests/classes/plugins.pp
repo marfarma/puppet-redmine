@@ -86,6 +86,10 @@ class redmine::plugins {
 		'hudson':
 			name => 'redmine_hudson',
 			url => 'https://github.com/AlekSi/redmine_hudson.git';
+
+		'issue_relations':
+			name => 'redmine_context_menu_relations',
+			url => 'https://github.com/edavis10/redmine_context_menu_relations.git';
 	}
 
 	if $redmine::plugins != [] {
