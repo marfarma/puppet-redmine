@@ -8,6 +8,9 @@ class redmine::themes {
 
 		'innerboard':
 			url => 'https://github.com/huacnlee/redmine-theme-innerboard.git';
+
+		'pixelcookers':
+			url => 'https://github.com/pixel-cookers/RedmineThemePixelCookers.git';
 	}
 
 	if $redmine::themes {
