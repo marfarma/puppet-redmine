@@ -81,7 +81,8 @@ class redmine::plugins {
 
 		'tags':
 			name => 'redmine_tags',
-			url => 'https://github.com/ixti/redmine_tags.git';
+			url => 'https://github.com/ixti/redmine_tags.git',
+			gems => ['acts-as-taggable-on'];
 
 		'hudson':
 			name => 'redmine_hudson',
