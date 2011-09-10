@@ -29,7 +29,7 @@ class redmine::plugins {
 			url => 'http://redmine-dmsf.googlecode.com/svn/';
 
 		'docpu':
-			name => 'docpu',
+			name => 'redmine_doc_pu',
 			url => 'https://github.com/erikkallen/redmine_doc_pu.git',
 			deps => ['texlive', 'texlive-latex'],
 			gems => ['RedCloth'];
@@ -44,7 +44,7 @@ class redmine::plugins {
 			gems => ['aasm', 'block_helpers'];
 
 		'timesheet':
-			name => 'redmine_timesheet',
+			name => 'timesheet_plugin',
 			url => 'https://github.com/edavis10/redmine-timesheet-plugin.git';
 
 		'webdav':
