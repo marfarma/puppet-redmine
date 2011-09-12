@@ -95,6 +95,10 @@ class redmine::plugins {
 		'irc_gateway':
 			name => 'redmine_irc_gateway',
 			url => 'https://github.com/hackers/redmine_irc_gateway.git';
+
+		'checkout':
+			name => 'redmine_checkout',
+			url => 'http://dev.holgerjust.de/projects/redmine-checkout/repository';
 	}
 
 	if $redmine::plugins != [] {
