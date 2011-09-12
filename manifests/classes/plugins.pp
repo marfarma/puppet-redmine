@@ -99,6 +99,10 @@ class redmine::plugins {
 		'checkout':
 			name => 'redmine_checkout',
 			url => 'http://dev.holgerjust.de/projects/redmine-checkout/repository';
+
+		'markdown_formatter':
+			name => 'redmine_markdown_formatter',
+			url => 'https://github.com/bitherder/redmine_markdown_formatter.git';
 	}
 
 	if $redmine::plugins != [] {
