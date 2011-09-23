@@ -107,6 +107,10 @@ class redmine::plugins {
 		'scmacros':
 			name => 'redmine_scmacros',
 			url => 'https://github.com/gpr/redmine_scmacros.git';
+
+		'graphviz':
+			name => 'wiki_graphviz_plugin',
+			url => 'https://github.com/tckz/redmine-wiki_graphviz_plugin.git';
 	}
 
 	if $redmine::plugins != [] {
