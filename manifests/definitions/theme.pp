@@ -1,5 +1,5 @@
 define redmine::theme (
-	url
+	$url
 ) {
 	exec {
 		"install_theme_$name":
