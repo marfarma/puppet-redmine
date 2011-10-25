@@ -111,6 +111,10 @@ class redmine::plugins {
 		'graphviz':
 			name => 'wiki_graphviz_plugin',
 			url => 'https://github.com/tckz/redmine-wiki_graphviz_plugin.git';
+
+		'groupwatch':
+			name => 'redmine_watchers_by_group',
+			url => 'https://github.com/alvila/redmine_watchers_by_group.git';
 	}
 
 	if $redmine::plugins != [] {
