@@ -31,7 +31,7 @@ class redmine::config {
 	exec {
 		'config_redmine_mysql_bootstrap':
 			environment => 'RAILS_ENV=production',
-			path => '/usr:/usr/bin',
+			path => "$ruby::bin_dir",
 			cwd => "$redmine::home",
 			provider => shell,
 			command => 'rake db:migrate',

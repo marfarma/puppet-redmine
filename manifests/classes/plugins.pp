@@ -124,6 +124,7 @@ class redmine::plugins {
 			'db:migrate_plugins':
 				command => 'rake db:migrate_plugins',
 				cwd => "$redmine::home",
+				path => "$ruby::bin_dir",
 				environment => 'RAILS_ENV=production',
 				require => Redmine::Plugin[$redmine::plugins];
 		}
