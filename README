@@ -1,0 +1,13 @@
+This module is meant to deploy a complete redmine setup, including database(s) and webserver with config.
+
+This module should work on:
+* CentOS 5.4 and up
+* CentOS 6.x
+* Archlinux latest
+Support for Debian/ubuntu should arrive someday, when I have some spare time ;)
+
+Dependencies:
+* mysql module: https://github.com/simonsd/puppet-mysql
+* apache module: https://github.com/simonsd/puppet-apache
+
+If I forgot anything, or plain simply screwed up, let me know.
