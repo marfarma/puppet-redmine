@@ -11,12 +11,12 @@ class redmine::config {
 			},
 			content => template("redmine/database.yml.erb");
 
-		'email.yml':
+		'configuration.yml':
 			ensure => present,
 			owner => $redmine_id,
 			group => $redmine_id,
-			path => "$redmine::home/config/email.yml",
-			content => template('redmine/email.yml.erb');
+			path => "$redmine::home/config/configuration.yml",
+			content => template('redmine/configuration.yml.erb');
 
 		'/var/www':
 			ensure => directory;
