@@ -1,24 +1,4 @@
 class redmine::core {
-	if $::operatingsystem == 'Debian' {
-		realize(File['/etc/apache2/sites-available/redmine', '/etc/apache2/sites-enabled/redmine'])
-	}
-
-	@file {
-		'/etc/apache2/sites-available/redmine':
-			owner => root,
-			group => root,
-			mode => 0644,
-			content => 'RailsBaseURI /redmine',
-			require => Package['redmine'];
-		'/etc/apache2/sites-available/redmine':
-			ensure => symlink,
-			owner => root,
-			group => root,
-			mode => 0644,
-			content => 'RailsBaseURI /redmine',
-			require => File['/etc/apache2/sites-available/redmine'];
-	}
-
 	exec {
 		'selinux_permissive':
 			path => '/bin:/usr/bin:/usr/sbin',
