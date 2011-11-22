@@ -1,22 +1,4 @@
 class redmine::core {
-	$redmine_id = $::operatingsystem ? {
-		archlinux => 'http',
-		/Debian|Ubuntu/ => 'www-data',
-		Centos => 'apache',
-	}
-
-	group { 'redmine':
-		ensure => present,
-		name => "$redmine_id",
-	}	
-
-	user { 'redmine':
-		ensure => present,
-		name => "$redmine_id",
-		gid => "$redmine_id",
-		require => Group["$redmine_id"],
-	}
-
 	if $::operatingsystem == 'Debian' {
 		realize(File['/etc/apache2/sites-available/redmine', '/etc/apache2/sites-enabled/redmine'])
 	}

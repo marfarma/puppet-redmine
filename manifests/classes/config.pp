@@ -2,8 +2,8 @@ class redmine::config {
 	file {
 		'database.yml':
 			ensure => present,
-			owner => $redmine_id,
-			group => $redmine_id,
+			owner => $apache::user,
+			group => $apache::group,
 			path => $::operatingsystem ? {
 				default => '/usr/share/redmine/config/database.yml',
 				Debian => '/etc/redmine/default/database.yml',
@@ -12,8 +12,8 @@ class redmine::config {
 
 		'configuration.yml':
 			ensure => present,
-			owner => $redmine_id,
-			group => $redmine_id,
+			owner => $apache::user,
+			group => $apache::group,
 			path => "$redmine::home/config/configuration.yml",
 			content => template('redmine/configuration.yml.erb');
 
@@ -23,13 +23,13 @@ class redmine::config {
 		'/var/www/redmine':
 			ensure => link,
 			target => "$redmine::home/public",
-			owner => $redmine_id,
-			group => $redmine_id;
+			owner => $apache::user,
+			group => $apache::group;
 	}
 
 	exec {
 		'chown redmine':
-			command => "chown -R $redmine_id:$redmine_id $redmine::home",
+			command => "chown -R ${apache::user}:${apache::group} ${redmine::home}",
 			provider => shell;
 	}
 

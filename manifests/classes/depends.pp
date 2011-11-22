@@ -95,8 +95,8 @@ class redmine::depends {
 
 		'/etc/redmine/default':
 			ensure => directory,
-			owner => $redmine_id,
-			group => $redmine_id,
+			owner => $apache::user,
+			group => $apache::group,
 			mode => 0755,
 			before => Class['redmine::config'];
 #			require => Exec['redmine_sources'],
