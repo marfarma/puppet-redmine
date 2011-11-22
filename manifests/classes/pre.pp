@@ -9,11 +9,6 @@ class redmine::pre {
 	}
 
 	@exec {
-		'gem update':
-			command => 'gem update --system',
-			path => '/usr/bin:/opt/ruby/bin',
-			onlyif => 'which gem';
-
 		'apt update':
 			command => 'apt-get update',
 			path => '/usr/bin';
@@ -22,8 +17,6 @@ class redmine::pre {
 			command => 'yum update -y',
 			path => '/usr/bin';
 	}
-
-#	realize(Exec['gem update'])
 
 	case $::operatingsystem {
 		Centos: {realize(Exec['yum update'])}
