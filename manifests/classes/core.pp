@@ -19,7 +19,7 @@ class redmine::core {
 
 	case $::operatingsystem {
 		default: {realize(Exec['session_store'])}
-		centos: {realize(Exec['selinux_disable', 'session_store'])}
+		centos: {realize(Exec['selinux_permissive', 'session_store'])}
 		debian: {realize(File['sites-available redmine'], Exec['redmine site enable'])}
 	}
 
@@ -35,12 +35,11 @@ class redmine::core {
 	}
 
 	@exec {
-		'selinux_disable':
-			path => '/bin:/usr/bin',
-			command => 'system-config-securitylevel-tui -q --selinux="disabled"',
-			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"';
-#			notify => Service["$webserver"],
-#			before => Service["$webserver"];
+		'selinux_permissive':
+			path => '/bin:/usr/bin:/usr/sbin',
+			command => 'setenforce permissive',
+			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"',
+			onlyif => 'which setenforce';
 
 		'session_store':
 			path => '/bin:/usr/bin:/opt/ruby/bin',
