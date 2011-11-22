@@ -4,10 +4,14 @@ This module should work on:
 * CentOS 5.4 and up
 * CentOS 6.x
 * Archlinux latest
-Support for Debian/ubuntu should arrive someday, when I have some spare time ;)
+
+Partial support for Debian 6.0.x, lacking vhost config for now.
+Support for ubuntu shouldn't be too hard considering most stuff is there for Debian.
+Might do it some time soon when I find some spare time.
 
 Dependencies:
 * mysql module: https://github.com/simonsd/puppet-mysql
 * apache module: https://github.com/simonsd/puppet-apache
+* vhost module: https://github.com/simonsd/puppet-vhost
 
 If I forgot anything, or plain simply screwed up, let me know.
