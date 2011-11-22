@@ -1,5 +1,4 @@
 class redmine::config {
-
 	file {
 		'database.yml':
 			ensure => present,
@@ -49,5 +48,14 @@ class redmine::config {
 				command => 'echo -e "\n# Redmine config\nInclude conf/extra/redmine.conf" >> /etc/httpd/conf/httpd.conf',
 				require => File['apache.conf'];
 		}
+	}
+
+	vhost {
+		'redmine':
+			documentroot => '/var/www/redmine',
+			insecure => no,
+			ssl => on,
+			servername => "${redmine::servername}",
+			serveralias => "${redmine::serveralias}";
 	}
 }
