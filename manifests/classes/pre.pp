@@ -1,13 +1,4 @@
 class redmine::pre {
-	user { 'puppet':
-		ensure => present,
-		gid => 'puppet',
-	}
-
-	group { 'puppet':
-		ensure => present,
-	}
-
 	@exec {
 		'apt update':
 			command => 'apt-get update',
