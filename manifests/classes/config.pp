@@ -16,15 +16,6 @@ class redmine::config {
 			group => $apache::group,
 			path => "$redmine::home/config/configuration.yml",
 			content => template('redmine/configuration.yml.erb');
-
-		'/var/www':
-			ensure => directory;
-
-		'/var/www/redmine':
-			ensure => link,
-			target => "$redmine::home/public",
-			owner => $apache::user,
-			group => $apache::group;
 	}
 
 	exec {
@@ -43,7 +34,7 @@ class redmine::config {
 
 	vhost {
 		'redmine':
-			documentroot => '/var/www/redmine',
+			documentroot => "${redmine::home}/public",
 			insecure => no,
 			ssl => on,
 			servername => "${redmine::servername}",
