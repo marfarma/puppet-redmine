@@ -18,8 +18,7 @@ class redmine::core {
 	}
 
 	if $::operatingsystem == 'Debian' {
-		centos: {realize(Exec['selinux_permissive', 'session_store'])}
-		debian: {realize(File['/etc/apache2/sites-available/redmine', '/etc/apache2/sites-enabled/redmine'])}
+		realize(File['/etc/apache2/sites-available/redmine', '/etc/apache2/sites-enabled/redmine'])
 	}
 
 	@file {
