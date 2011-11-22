@@ -17,24 +17,28 @@ class redmine::core {
 		require => Group["$redmine_id"],
 	}
 
-	case $::operatingsystem {
-		default: {realize(Exec['session_store'])}
+	if $::operatingsystem == 'Debian' {
 		centos: {realize(Exec['selinux_permissive', 'session_store'])}
-		debian: {realize(File['sites-available redmine'], Exec['redmine site enable'])}
+		debian: {realize(File['/etc/apache2/sites-available/redmine', '/etc/apache2/sites-enabled/redmine'])}
 	}
 
 	@file {
-		'sites-available redmine':
-			path => '/etc/apache2/sites-available/redmine',
-			ensure => present,
+		'/etc/apache2/sites-available/redmine':
 			owner => root,
 			group => root,
 			mode => 0644,
 			content => 'RailsBaseURI /redmine',
 			require => Package['redmine'];
+		'/etc/apache2/sites-available/redmine':
+			ensure => symlink,
+			owner => root,
+			group => root,
+			mode => 0644,
+			content => 'RailsBaseURI /redmine',
+			require => File['/etc/apache2/sites-available/redmine'];
 	}
 
-	@exec {
+	exec {
 		'selinux_permissive':
 			path => '/bin:/usr/bin:/usr/sbin',
 			command => 'setenforce permissive',
@@ -47,10 +51,5 @@ class redmine::core {
 			provider => 'shell',
 			command => 'rake generate_session_store',
 			require => Package['gem_rails'];
-
-		'redmine site enable':
-			command => '/usr/sbin/a2ensite redmine',
-			require => File['/etc/apache2/sites-available/redmine'],
-			unless => '/usr/bin/test -f /etc/apache2/sites-enabled/redmine';
 	}
 }
