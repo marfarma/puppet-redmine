@@ -55,14 +55,6 @@ class redmine::depends {
 			name => 'rails',
 			provider => gem,
 			before => Exec['config_redmine_mysql_bootstrap'];
-
-		'curl-devel':
-			ensure => installed,
-			name => $::operatingsystem ? {
-				archlinux => 'curl',
-				Centos => 'libcurl-devel',
-				Debian => 'libcurl4-openssl-dev',
-			};
 	}
 	
 	case $::operatingsystem {
