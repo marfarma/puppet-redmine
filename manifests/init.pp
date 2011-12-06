@@ -2,7 +2,6 @@ import 'classes/*'
 import 'definitions/*'
 
 class redmine (
-	$webserver = 'httpd',
 	$servername,
 	$serveralias = [],
 	$production_db = 'redmine_production',
