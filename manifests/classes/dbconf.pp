@@ -22,6 +22,6 @@ class redmine::dbconf {
 			provider => shell,
 			command => 'rake db:migrate',
 			require => Mysql_db[$redmine::production_db],
-			notify => Service["$redmine::webserver"];
+			notify => Service["$apache::apache"];
 	}
 }
