@@ -6,12 +6,10 @@ class redmine::dbconf {
 
 	mysql_db {
 		$redmine::production_db:
-			user => $redmine::dbuser,
-			pass => $redmine::dbpass;
+			user => $redmine::dbuser;
 
 		$redmine::devel_db:
-			user => $redmine::dbuser,
-			pass => $redmine::dbpass;
+			user => $redmine::dbuser;
 	}
 
 	exec {
