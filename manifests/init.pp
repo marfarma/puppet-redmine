@@ -25,12 +25,12 @@ class redmine (
 		'redmine::pre':
 			before => Class['redmine::depends'];
 		'redmine::depends':
-			before => Class['redmine::dbconf'];
+			before => Class['redmine::config'];
 		'redmine::dbconf':
 			require => Service['mysqld'],
-			before => Class['redmine::config'];
-		'redmine::config':
 			before => Class['redmine::plugins'];
+		'redmine::config':
+			before => Class['redmine::dbconf'];
 		'redmine::plugins':;
 		'redmine::themes':;
 	}
