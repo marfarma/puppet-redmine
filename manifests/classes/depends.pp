@@ -55,6 +55,10 @@ class redmine::depends {
 			name => 'rails',
 			provider => gem,
 			before => Exec['config_redmine_mysql_bootstrap'];
+		'acts_as_taggable_on':
+			ensure => '2.1.0',
+			provider => gem,
+			before => Exec['config_redmine_mysql_bootstrap'];
 	}
 	
 	case $::operatingsystem {
