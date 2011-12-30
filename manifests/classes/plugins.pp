@@ -102,7 +102,8 @@ class redmine::plugins {
 
 		'markdown_formatter':
 			name => 'redmine_markdown_formatter',
-			url => 'https://github.com/bitherder/redmine_markdown_formatter.git';
+			url => 'https://github.com/bitherder/redmine_markdown_formatter.git',
+			gems => 'rdiscount';
 
 		'scmacros':
 			name => 'redmine_scmacros',
