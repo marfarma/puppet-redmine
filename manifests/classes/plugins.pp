@@ -115,6 +115,16 @@ class redmine::plugins {
 		'groupwatch':
 			name => 'redmine_watchers_by_group',
 			url => 'https://github.com/alvila/redmine_watchers_by_group.git';
+
+		'sprints':
+			name => 'redmine_sprints',
+			url => 'git+ssh://git@git.dev.inuits.be:2222/redmine-plugins/redmine_sprints.git',
+			gems => ['googlecharts', 'mini_magick'],
+			require => Redmine::Plugin['attachment_fu'];
+
+		'attachment_fu':
+			name => 'attachment_fu',
+			url => 'git+ssh://git@git.dev.inuits.be:2222/redmine-plugins/attachment_fu.git';
 	}
 
 	if $redmine::plugins != [] {
