@@ -21,7 +21,7 @@ class redmine::plugins {
 			url => 'https://github.com/edavis10/redmine-bulk_time_entry_plugin.git';
 
 		'pastebin':
-			name => 'pastebin',
+			name => 'redmine_pastebin',
 			url => 'git+ssh://git@git.dev.inuits.be:2222/redmine-plugins/redmine_pastebin.git';
 
 		'dmsf':
