@@ -14,6 +14,9 @@ class redmine::themes {
 
 		'squeejee':
 			url => 'https://github.com/edavis10/squeejee_theme.git';
+
+		'martini':
+			url => 'https://github.com/bevanr/martini.git';
 	}
 
 	if $redmine::themes {
