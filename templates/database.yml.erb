@@ -3,7 +3,7 @@ production:
   database: <%= scope.lookupvar('redmine::production_db') %>
   username: <%= scope.lookupvar('dbuser') %>
   password: <%= scope.lookupvar('dbpass') %>
-  host: <%= scope.lookupvar('dbhost') %>
+  host: <%= scope.lookupvar('dbserver') %>
   encoding: utf8
 
 development:
@@ -11,5 +11,5 @@ development:
   database: <%= scope.lookupvar('redmine::devel_db') %>
   username: <%= scope.lookupvar('dbuser') %>
   password: <%= scope.lookupvar('dbpass') %>
-  host: <%= scope.lookupvar('dbhost') %>
+  host: <%= scope.lookupvar('dbserver') %>
   encoding: utf8
