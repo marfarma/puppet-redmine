@@ -8,6 +8,7 @@ class redmine (
 	$devel_db = 'redmine_devel',
 	$dbuser = 'redmine',
 	$dbpass = 'redmine',
+	$dbhost = 'localhost',
 	$home = '/usr/share/redmine',
 	$plugins = [],
 	$mail_user = 'redmine',

@@ -1,15 +1,18 @@
 class redmine::dbconf {
 	mysql_user {
 		$redmine::dbuser:
-			pass => $redmine::dbpass;
+			pass => $redmine::dbpass,
+			host => "${redmine::dbhost}";
 	}
 
 	mysql_db {
 		$redmine::production_db:
-			user => $redmine::dbuser;
+			user => $redmine::dbuser,
+			host => "${redmine::dbhost}";
 
 		$redmine::devel_db:
-			user => $redmine::dbuser;
+			user => $redmine::dbuser,
+			host => "${redmine::dbhost}";
 	}
 
 	exec {
