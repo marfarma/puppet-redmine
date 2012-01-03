@@ -28,7 +28,7 @@ class redmine::dbconf {
 			require => Mysql_db[$redmine::production_db],
 			notify => Service["$apache::apache"];
 		'load_default_data':
-			environment => 'RAILS_ENV=production REDMINE_LANG=en',
+			environment => ['RAILS_ENV=production', 'REDMINE_LANG=en'],
 			path => "$ruby::bin_dir",
 			cwd => "$redmine::home",
 			provider => 'shell',
