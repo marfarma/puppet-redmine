@@ -2,7 +2,7 @@ class redmine::plugins {
 	@redmine::plugin {
 		'gitolite':
 			name => 'redmine_git_hosting',
-			url => 'https://github.com/ericpaulbishop/redmine_git_hosting.git',
+			url => 'git+ssh://git@git.dev.inuits.be:2222/redmine-plugins/redmine_git_hosting.git',
 			deps => 'gitolite',
 			gems => ['lockfile', 'inifile', 'net-ssh'];
 
