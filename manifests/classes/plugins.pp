@@ -3,8 +3,8 @@ class redmine::plugins {
 		'gitolite':
 			name => 'redmine_git_hosting',
 			url => 'git+ssh://git@git.dev.inuits.be:2222/redmine-plugins/redmine_git_hosting.git',
-			deps => 'gitolite',
-			gems => ['lockfile', 'inifile', 'net-ssh'];
+			gems => ['lockfile', 'inifile', 'net-ssh'],
+			require => Class['gitolite'];
 
 		'gitosis':
 			name => 'redmine_gitosis',
