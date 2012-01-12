@@ -6,6 +6,7 @@ class redmine::pre {
 
 		'yum update':
 			command => 'yum update -y',
+			timeout => '0',
 			path => '/usr/bin';
 	}
 
