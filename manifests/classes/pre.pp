@@ -18,7 +18,7 @@ class redmine::pre {
 		'selinux_permissive':
 			path => '/bin:/usr/bin:/usr/sbin',
 			command => 'setenforce permissive',
-			unless => 'cat /etc/selinux/config|grep "SELINUX=disabled"',
+			unless => 'sestatus | grep -E "(disabled|permissive)"',
 			onlyif => 'which setenforce';
 	}
 }
