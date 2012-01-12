@@ -21,7 +21,7 @@ class redmine (
 	$mail_tls = 'true',
 	$themes = []
 ) {
-	if ! defined(Class[':repos']) { include ::repos }
+	if ! defined(Class['::repos']) { include ::repos }
 
 	class {
 		'redmine::pre':
