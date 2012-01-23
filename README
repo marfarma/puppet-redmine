@@ -15,4 +15,9 @@ Dependencies:
 * vhost module: https://github.com/simonsd/puppet-vhost
 * passenger module: https://github.com/simonsd/puppet-passenger
 
+NOTE:
+The redmine is installed from a tarball, included in the repo.
+It is based on the official 1.2.1 tarball, but is patched to allow for private comments on issues.
+More about the patch can be found here: http://www.redmine.org/issues/1554
+
 If I forgot anything, or plain simply screwed up, let me know.
