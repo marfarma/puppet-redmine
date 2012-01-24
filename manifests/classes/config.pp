@@ -43,7 +43,7 @@ class redmine::config {
 
 	exec {
 		'session_store':
-			path => '/bin:/usr/bin:/opt/ruby/bin',
+			path => '/opt/ruby1.8/bin:/bin:/usr/bin',
 			cwd => '/usr/share/redmine/public',
 			provider => 'shell',
 			command => 'rake generate_session_store',
