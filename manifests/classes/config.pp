@@ -24,14 +24,6 @@ class redmine::config {
 			provider => shell;
 	}
 
-	if $::operatingsystem == 'archlinux' {
-		exec {
-			'include redmine.conf':
-				command => "echo -e \"\n# Redmine config\nInclude conf.d/${redmine::servername}.conf\" >> /etc/httpd/conf/httpd.conf",
-				require => File['apache.conf'];
-		}
-	}
-
 	vhost {
 		'redmine':
 			documentroot => "${redmine::home}/public",
