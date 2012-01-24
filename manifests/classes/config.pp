@@ -27,7 +27,7 @@ class redmine::config {
 	if $::operatingsystem == 'archlinux' {
 		exec {
 			'include redmine.conf':
-				command => 'echo -e "\n# Redmine config\nInclude conf/extra/redmine.conf" >> /etc/httpd/conf/httpd.conf',
+				command => "echo -e \"\n# Redmine config\nInclude conf.d/${redmine::servername}.conf\" >> /etc/httpd/conf/httpd.conf",
 				require => File['apache.conf'];
 		}
 	}
